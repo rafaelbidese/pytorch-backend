@@ -1,0 +1,7 @@
+version: '3.9'
+
+services:
+  pytorch-backend: 
+    build: .
+    ports:
+      - "9001:9001"
