@@ -1,5 +1,3 @@
-from enum import auto
-from msvcrt import kbhit
 from PIL import Image
 import torch
 import torchvision
@@ -29,7 +27,9 @@ def get_transforms(x):
 
 class MAL:
     def __init__(self):
-        self.model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
+        self.model = torchvision.models.detection.maskrcnn_resnet50_fpn(
+            pretrained_backbone=False, pretrained=False
+        )
         checkpoint = torch.load("maskrcnn_resnet50_fpn_coco-bf2d0c1e.pth")
         self.model.load_state_dict(checkpoint, strict=False)
         self.model.eval()
