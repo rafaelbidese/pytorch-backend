@@ -17,5 +17,3 @@ MASKRCNN_CLASSES = "BG,person,bicycle,car,motorcycle,airplane,\
          teddy bear,hair drier,toothbrush".split(
     ","
 )
-
-# MASKRCNN_CLASSES = "BG,rooty".split(",")
