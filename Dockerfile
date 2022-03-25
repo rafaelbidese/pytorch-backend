@@ -1,5 +1,9 @@
 FROM python:3.10-slim
 
+RUN apt-get update && apt-get install -y python3-opencv
+
+RUN apt-get install ffmpeg libsm6 libxext6  -y
+
 ENV FLASK_ENV=production
 
 ENV FLASK_RUN_PORT=9001

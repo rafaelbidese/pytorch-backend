@@ -28,7 +28,6 @@ def predict():
         prediction = model.predict(image)
         jsonified = jsonify({"coco": prediction})
         return jsonified
-        
 
 
-app.run(debug=True)
+# app.run(debug=True)
