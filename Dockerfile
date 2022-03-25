@@ -8,6 +8,8 @@ ENV FLASK_ENV=production
 
 ENV FLASK_RUN_PORT=9001
 
+RUN python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
+
 COPY requirements.txt /
 
 RUN pip3 install --upgrade pip

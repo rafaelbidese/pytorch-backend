@@ -1,32 +1,27 @@
-from PIL import Image
-import torch
-import torchvision
-import torchvision.transforms as T
-from utils import to_coco
-
-
-def get_transforms(x):
-    return T.Compose(
-        [
-            T.ToTensor(),
-        ]
-    )(x)
+from segmentation import Detectron2MAL, PytorchMAL
 
 
 class MAL:
     def __init__(self):
-        self.model = torchvision.models.detection.maskrcnn_resnet50_fpn(
-            pretrained_backbone=False, pretrained=False
+        self.model = get_model(
+            framework="detectron2", model_str="resnet50_fpn", weights="model_final.pth"
         )
-        checkpoint = torch.load("maskrcnn_resnet50_fpn_coco-bf2d0c1e.pth")
-        self.model.load_state_dict(checkpoint, strict=False)
-
-        self.model.eval()
 
     def predict(self, image):
-        x = Image.open(image).convert("RGB")
-        w, h = x.size
-        x = get_transforms(x).unsqueeze(0)
-        pred = self.model(x)[0]
-        pred = {k: pred[k].tolist() for k in pred.keys()}
-        return to_coco(pred, w, h)
+        return self.model.predict(image)
+
+
+def get_model(
+    framework="pytorch",
+    model_str="resnet50_fpn",
+    num_classes=2,
+    weights="maskrcnn_resnet50_fpn_coco-bf2d0c1e.pth",
+):
+    model = None
+    if framework == "pytorch":
+        model = PytorchMAL(model_str, num_classes, weights)
+
+    if framework == "detectron2":
+        model = Detectron2MAL(model_str, num_classes, weights)
+
+    return model

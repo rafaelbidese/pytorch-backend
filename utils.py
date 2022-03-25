@@ -30,7 +30,7 @@ def to_json(boxes, labels, masks, areas, width, height):
         annotation.height = height
         annotation.area = area
         annotation.segmentation = [mask]
-        annotation.box = box
+        annotation.bbox = box
         annotation.color = get_random_color()
         annotations += [annotation]
 
@@ -62,24 +62,6 @@ def mask_to_contour(mask):
         np.uint8(thresh), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE
     )
     return contours
-
-
-def to_coco(pred, width, height):
-    # ['boxes', 'labels', 'scores', 'masks']
-    boxes, labels, scores, masks, areas = [], [], [], [], []
-    mask_polygons = [mask_to_segmentation(mask) for mask in pred["masks"]]
-    mask_areas = [mask_to_area(mask) for mask in pred["masks"]]
-    for b, l, s, p, a in zip(
-        pred["boxes"], pred["labels"], pred["scores"], mask_polygons, mask_areas
-    ):
-        if s > DETECTION_TRESHOLD:
-            boxes += [b]
-            labels += [l]
-            scores += [s]
-            masks += [p]
-            areas += [a]
-
-    return to_json(boxes, labels, masks, areas, width, height)
 
 
 class dotdict(dict):
