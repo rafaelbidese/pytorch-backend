@@ -1,10 +1,15 @@
+import os
 from segmentation import Detectron2MAL, PytorchMAL
+from config import MODEL_WEIGHTS, MODEL_FRAMEWORK, MODEL_STR
 
 
 class MAL:
     def __init__(self):
+        weight_folder = "./models"
+        weight_file = MODEL_WEIGHTS
+        path_to_weight = os.path.join(weight_folder, weight_file)
         self.model = get_model(
-            framework="detectron2", model_str="resnet50_fpn", weights="model_final.pth"
+            framework=MODEL_FRAMEWORK.lower(), model_str=MODEL_STR.lower(), weights=path_to_weight
         )
 
     def predict(self, image):

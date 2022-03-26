@@ -1,5 +1,9 @@
 DETECTION_TRESHOLD = 0.8
 
+MODEL_WEIGHTS = "model_final.pth"
+MODEL_FRAMEWORK = "detectron2"
+MODEL_STR = "resnet50_fpn"
+
 # MASKRCNN_CLASSES = "BG,person,bicycle,car,motorcycle,airplane,\
 #          bus,train,truck,boat,traffic light,\
 #          fire hydrant,stop sign,parking meter,bench,bird,\
