@@ -1,5 +1,6 @@
 # Pytorch-backend for COCO-Annotator
-This is a simple http server to perform prediction for model assisted labelling used with the [COCO-Annotator](https://github.com/jsbroks/coco-annotator) interface.
+
+This backend service to perform predictions for model assisted labelling used with the [COCO-Annotator](https://github.com/jsbroks/coco-annotator) interface.
 
 
 # Installation instructions
@@ -28,11 +29,16 @@ By default, this API will be accessible at:
 
 Copy and paste the address in the COCO-Annotator Annotate API field.
 
+You can check if the server is running by accessing:
+
+`http://localhost:9001/`
+
+
 # Configuring your custom model
 
 Off the box, we support two frameworks as backends: Detectron2 and Pytorch. 
 
-- Open `app/config.py` and configure the model `MODEL_FRAMEWORK` and each framework specific variables. 
+- Open `config/config.py` and configure the model `MODEL_FRAMEWORK`, `NUM_CLASSES` and each framework specific variables. 
 - Place your pre-trained model weights at the folder `models`.
 - Update your model weight file name at `MODEL_WEIGHTS`.
 
