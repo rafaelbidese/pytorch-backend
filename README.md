@@ -1,6 +1,6 @@
 # Pytorch-backend for COCO-Annotator
 
-This backend service to perform predictions for model assisted labelling used with the [COCO-Annotator](https://github.com/jsbroks/coco-annotator) interface.
+This project is a backend service to perform predictions for model assisted labelling with [COCO-Annotator](https://github.com/jsbroks/coco-annotator).
 
 
 # Installation instructions
