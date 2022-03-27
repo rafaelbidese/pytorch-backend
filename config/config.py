@@ -1,8 +1,15 @@
 DETECTION_TRESHOLD = 0.8
 
-MODEL_WEIGHTS = "model_final.pth"
+
+# Custom model configuration
 MODEL_FRAMEWORK = "detectron2"
-MODEL_STR = "resnet50_fpn"
+NUM_CLASSES = 2
+MODEL_WEIGHTS = "model_final.pth"
+
+# PyTorch specific
+PYTORCH_MODEL_STR = "resnet50_fpn"
+# Detectron2 specific
+DETECTRON2_CONFIG = "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml"
 
 # MASKRCNN_CLASSES = "BG,person,bicycle,car,motorcycle,airplane,\
 #          bus,train,truck,boat,traffic light,\

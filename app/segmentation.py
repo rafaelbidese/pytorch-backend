@@ -1,40 +1,29 @@
 from detectron2 import model_zoo
 from detectron2.config import get_cfg
-from detectron2.modeling import build_model
-from detectron2.checkpoint import DetectionCheckpointer
 from detectron2.engine.defaults import DefaultPredictor
 from PIL import Image
 import numpy as np
 import torchvision
 import torch
-from config import DETECTION_TRESHOLD
+from config.config import DETECTION_TRESHOLD, DETECTRON2_CONFIG, PYTORCH_MODEL_STR, NUM_CLASSES
 import torchvision.transforms as T
 
-from utils import mask_to_area, mask_to_segmentation, to_json
-
-
-def get_transforms(x):
-    return T.Compose(
-        [
-            T.ToTensor(),
-        ]
-    )(x)
-
+from utils import mask_to_area, mask_to_segmentation, to_json, get_weights
 
 class PytorchMAL:
-    def __init__(self, model_str, num_classes, weights):
-        if model_str == "resnet50_fpn":
+    def __init__(self):
+        if PYTORCH_MODEL_STR.lower() == "resnet50_fpn":
             self.model = torchvision.models.detection.maskrcnn_resnet50_fpn(
-                pretrained_backbone=False, pretrained=False, num_classes=num_classes
+                pretrained_backbone=False, pretrained=False, num_classes=NUM_CLASSES
             )
-            checkpoint = torch.load(weights)
+            checkpoint = torch.load(get_weights())
             self.model.load_state_dict(checkpoint, strict=False)
             self.model.eval()
 
     def predict(self, image):
         x = Image.open(image).convert("RGB")
         w, h = x.size
-        x = get_transforms(x).unsqueeze(0)
+        x = self._get_transforms(x).unsqueeze(0)
         with torch.no_grad():
             pred = self.model(x)[0]
         pred = {k: pred[k].tolist() for k in pred.keys()}
@@ -56,16 +45,21 @@ class PytorchMAL:
 
         return to_json(boxes, labels, masks, areas, width, height)
 
+    def _get_transforms(x):
+        return T.Compose(
+            [
+                T.ToTensor(),
+            ]
+        )(x)
+
 
 class Detectron2MAL:
-    def __init__(self, model_str, num_classes, weights):
-        if model_str == "resnet50_fpn":
-            conf_file = "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml"
+    def __init__(self):
         cfg = get_cfg()
-        cfg.merge_from_file(model_zoo.get_config_file(conf_file))
+        cfg.merge_from_file(model_zoo.get_config_file(DETECTRON2_CONFIG))
         cfg.MODEL.DEVICE = "cpu"
-        cfg.MODEL.WEIGHTS = weights
-        cfg.MODEL.ROI_HEADS.NUM_CLASSES = num_classes
+        cfg.MODEL.WEIGHTS = get_weights()
+        cfg.MODEL.ROI_HEADS.NUM_CLASSES = NUM_CLASSES
         self.model = DefaultPredictor(cfg)
 
     def predict(self, image):

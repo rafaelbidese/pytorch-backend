@@ -7,3 +7,4 @@ services:
       - "9001:9001"
     volumes:
     - "./models:/app/models"
+    - "./config:/app/config"

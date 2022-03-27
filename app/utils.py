@@ -1,7 +1,8 @@
+import os
 import cv2
 import numpy as np
 import random
-from config import MASKRCNN_CLASSES, DETECTION_TRESHOLD
+from config.config import MASKRCNN_CLASSES, MODEL_WEIGHTS
 from templates import ANNOTATIONS_TEMPLATE, CATEGORY_TEMPLATE, IMAGES_TEMPLATE
 
 
@@ -76,3 +77,10 @@ def get_random_color():
     return ["#" + "".join([random.choice("ABCDEF0123456789") for _ in range(6)])][
         0
     ].lower()
+
+
+def get_weights():
+    weight_folder = "./models"
+    weight_file = MODEL_WEIGHTS
+    path_to_weight = os.path.join(weight_folder, weight_file)
+    return path_to_weight
