@@ -7,7 +7,7 @@ This project is a backend service to perform predictions for model assisted labe
 
 Clone this repository:
 
-`git clone https://github.com/rafaelbidese/pytorch-backend.git`
+`git clone https://github.com/rafaelbidese/pytorch-backend.git --config core.autocrlf=input`
 
 Navigate to the repository folder:
 
@@ -16,6 +16,9 @@ Navigate to the repository folder:
 And run the docker compose file (if you don't have the images created, it will create them by default):
 
 `docker compose up`
+
+FAQ: If you get an error such as: `standard_init_linux.go:XXX: exec user process caused "no such file or directory"` make sure that you cloned the repository with the option `--config core.autocrlf=input` or convert all the files in your folder to end-of-line Unix format (LF, `\n`).
+
 
 # Setup COCO-Annotator
 
