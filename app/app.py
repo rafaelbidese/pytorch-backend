@@ -11,7 +11,7 @@ model = MAL()
 @app.route("/")
 @app.route("/index")
 def index():
-    return "I am working :D"
+    return "I am working :)"
 
 
 @app.route("/predict", methods=["POST"])
