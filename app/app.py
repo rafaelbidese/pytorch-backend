@@ -30,5 +30,5 @@ def predict():
         return jsonified
 
 
-app.run(debug=True)
+# app.run(debug=True)
 
