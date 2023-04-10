@@ -57,7 +57,8 @@ class Detectron2MAL:
     def __init__(self):
         cfg = get_cfg()
         cfg.merge_from_file(model_zoo.get_config_file(DETECTRON2_CONFIG))
-        cfg.MODEL.DEVICE = "cpu"
+        # cfg.MODEL.DEVICE = "cpu"
+        cfg.MODEL.DEVICE = "cuda"
         cfg.MODEL.WEIGHTS = get_weights()
         cfg.MODEL.ROI_HEADS.NUM_CLASSES = NUM_CLASSES
         self.model = DefaultPredictor(cfg)

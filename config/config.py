@@ -3,7 +3,7 @@ DETECTION_TRESHOLD = 0.8
 
 # Custom model configuration
 MODEL_FRAMEWORK = "detectron2"
-NUM_CLASSES = 2
+NUM_CLASSES = 1
 MODEL_WEIGHTS = "model_final.pth"
 
 # PyTorch specific

@@ -8,3 +8,10 @@ services:
     volumes:
     - "./models:/app/models"
     - "./config:/app/config"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
